@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <!-- шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&family=Open+Sans:wght@400;700&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>EV Charging</title>
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<header class="header" id="header">
+    <div class="container">
+        <div class="header__inner">
+            <div class="header__logo">
+                <img th:src="@{/images/logo2_icon.jpg}" alt="Logo" />
+            </div>
+            <nav class="nav" id="nav">
+                <a th:href="@{/user/userLanding}" class="nav__link">Applications</a>
+                <a th:href="@{/user/userLanding}" class="nav__link">Our Goals</a>
+                <a th:href="@{/user/userLanding}" class="nav__link">Our Team</a>
+                <a th:href="@{/user/userLanding}" class="nav__link">Reviews</a>
+                <a th:href="@{/user/history}" class="nav__link">History</a>
+                <a th:href="@{/logout}" class="nav__link">Logout</a>
+            </nav>
+            <button class="burger" id="navToggle" type="button">
+                <span class="burger__item">Menu</span>
+            </button>
+        </div>
+    </div>
+</header>
+<!-- Introduction -->
+<div class="intro" id="intro">
+    <div class="container">
+        <div class="intro__inner">
+            <h1 class="intro__title">
+                Welcome to the EV Charging Station WebApp
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="evLocator">
+                <div id="map" style="width: 100%; height: 500px;"> <!--th:if="${mapEmbed}"--></div>
+                    <script th:inline="javascript">
+                        mapboxgl.accessToken = "YOUR_MAPBOX_TOKEN_HERE";
+                        var directionsData = /*[[${directions}]]*/ {};
+
+                        // Calculate the center of the route
+                        var routeCoordinates = directionsData.routes[0].geometry.coordinates;
+                        var lngSum = 0;
+                        var latSum = 0;
+                        for (var i = 0; i < routeCoordinates.length; i++) {
+                            lngSum += routeCoordinates[i][0];
+                            latSum += routeCoordinates[i][1];
+                        }
+                        var avgLng = lngSum / routeCoordinates.length;
+                        var avgLat = latSum / routeCoordinates.length;
+
+                        var map = new mapboxgl.Map({
+                            container: "map",
+                            style: "mapbox://styles/mapbox/streets-v11",
+                            center: [avgLng, avgLat], // Centered around the average of route coordinates
+                            zoom: 13
+                        });
+
+                        new mapboxgl.Marker({ color: "red" })
+                            .setLngLat(directionsData.waypoints[0].location)
+                            .addTo(map);
+
+                        new mapboxgl.Marker({ color: "blue" })
+                            .setLngLat(directionsData.waypoints[1].location)
+                            .addTo(map);
+
+                        map.on("load", function () {
+                            directionsData.routes.forEach(function (route, index) {
+                                var routeCoordinates = route.geometry.coordinates;
+
+                                var geojson = {
+                                    type: "Feature",
+                                    properties: {
+                                        name: "Route " + (index + 1),
+                                    },
+                                    geometry: {
+                                        type: "LineString",
+                                        coordinates: routeCoordinates,
+                                    },
+                                };
+
+                                map.addLayer({
+                                    id: "route-" + index,
+                                    type: "line",
+                                    source: {
+                                        type: "geojson",
+                                        data: geojson,
+                                    },
+                                    layout: {
+                                        "line-join": "round",
+                                        "line-cap": "round",
+                                    },
+                                    paint: {
+                                        "line-color": "#" + (Math.random().toString(16) + "000000").slice(2, 8),
+                                        "line-width": 8,
+                                    },
+                                });
+                            });
+                        });
+                </script>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="location d-flex align-items-center justify-content-center"><!--th:if="${search}"-->
+                <form id="search" th:action="@{/user/evcharging/locator}" method="post">
+                    <i class="uil uil-search"></i>
+                    <input type="text" th:value="${location}" name="location" placeholder="Enter your location" />
+                    <button class="button">Search</button>
+                </form>
+            </div>
+
+            <div class="map-container">
+                <div id="locations">
+                    <div class="station-container">
+                        <th:block th:if="${evStations != null and evStations.size() > 0}">
+                            <div class="displayStations" th:each="evStations: ${evStations}">
+                                <div class="station-info">
+                                    <h3 th:text="${evStations.stationName}"></h3>
+                                    <p th:inline="text">Address: [[${evStations.streetAddress}]], [[${evStations.city}]], [[${evStations.country}]]</p>
+                                    <p th:inline="text">Phone Number: [[${evStations.stationPhone}]]</p>
+                                    <p th:inline="text">Level 2 Charging Ports: [[${evStations.evLevel2EvseNum}]]</p>
+                                    <p th:inline="text">Belongs to this EV Network: [[${evStations.evNetwork}]]</p>
+                                    <p th:inline="text">Timings: [[${evStations.accessDaysTime}]]</p>
+                                    <form th:action="@{/user/evcharging/routing/} + ${evStations.id}" th:method="post">
+                                        <button class="distance-btn" th:inline="text" type="submit">[[${evStations.distanceKm}]] KM</button>
+                                    </form>
+                                    <form th:action="@{/user/evcharging/reserve/} + ${evStations.id}" th:method="post">
+                                        <button class="distance-btn" type="submit">Reserve</button>
+                                    </form>
+                                    <form th:action="@{/user/evcharging/price/} + ${evStations.id}" th:method="post">
+                                        <button class="distance-btn" type="submit">Real time pricing</button>
+                                    </form>
+                                    <form th:action="@{/user/evcharging/status/} + ${evStations.id}" th:method="post">
+                                        <button class="distance-btn" type="submit">Status</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${steps != null and steps.size() > 0}">
+                            <div class="displayStations" th:each="steps: ${steps}"><!--th:if="${textDir}"-->
+                                <div class="station-info">
+                                    <h3 th:text="${steps.maneuver.instruction}"></h3>
+                                    <p th:inline="text">[[${steps.maneuver.type}]]</p>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer__inner">
+            <div class="footer__block">
+                <h4 class="footer__title">Location</h4>
+                <div class="footer__text">
+                    <div>300 Yonge St</div>
+                    <div>Toronto, ON M5B 2K3</div>
+                </div>
+            </div>
+            <div class="footer__block">
+                <h4 class="footer__title">Share with Love</h4>
+                <div class="social social--footer">
+                    <a class="social__item" href="#" target="_blank">
+                        <svg class="social__icon">
+                            <use xlink:href="#facebook"></use>
+                        </svg>
+                    </a>
+                    <a class="social__item" href="#" target="_blank">
+                        <svg class="social__icon">
+                            <use xlink:href="#twitter"></use>
+                        </svg>
+                    </a>
+                    <a class="social__item" href="#" target="_blank">
+                        <svg class="social__icon">
+                            <use xlink:href="#linkedin"></use>
+                        </svg>
+                    </a>
+                </div>
+                <!-- ./social -->
+            </div>
+            <div class="footer__block">
+                <h4 class="footer__title">About MJ05</h4>
+                <div class="footer__text">
+                    <div>We're final year engineering students and this is our capstone project.</div>
+                </div>
+            </div>
+        </div>
+        <!-- ./footer__inner -->
+    </div>
+</footer>
+</body>
+</html>

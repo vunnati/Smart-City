@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital@1&family=Open+Sans:wght@400;700&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- слайдер -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>User Landing Page</title>
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<!-- Sprite SVG -->
+<svg style="display: none;">
+    <symbol id="facebook" viewBox="0 0 24 24">
+        <g>
+            <path d="m15.997 3.985h2.191v-3.816c-.378-.052-1.678-.169-3.192-.169-3.159 0-5.323 1.987-5.323 5.639v3.361h-3.486v4.266h3.486v10.734h4.274v-10.733h3.345l.531-4.266h-3.877v-2.939c.001-1.233.333-2.077 2.051-2.077z"/>
+        </g>
+
+    </symbol>
+    <symbol id="twitter" viewBox="0 0 512 512">
+        <g>
+            <path d="M512,97.248c-19.04,8.352-39.328,13.888-60.48,16.576c21.76-12.992,38.368-33.408,46.176-58.016
+                    c-20.288,12.096-42.688,20.64-66.56,25.408C411.872,60.704,384.416,48,354.464,48c-58.112,0-104.896,47.168-104.896,104.992
+                    c0,8.32,0.704,16.32,2.432,23.936c-87.264-4.256-164.48-46.08-216.352-109.792c-9.056,15.712-14.368,33.696-14.368,53.056
+                    c0,36.352,18.72,68.576,46.624,87.232c-16.864-0.32-33.408-5.216-47.424-12.928c0,0.32,0,0.736,0,1.152
+                    c0,51.008,36.384,93.376,84.096,103.136c-8.544,2.336-17.856,3.456-27.52,3.456c-6.72,0-13.504-0.384-19.872-1.792
+                    c13.6,41.568,52.192,72.128,98.08,73.12c-35.712,27.936-81.056,44.768-130.144,44.768c-8.608,0-16.864-0.384-25.12-1.44
+                    C46.496,446.88,101.6,464,161.024,464c193.152,0,298.752-160,298.752-298.688c0-4.64-0.16-9.12-0.384-13.568
+                    C480.224,136.96,497.728,118.496,512,97.248z"/>
+        </g>
+    </symbol>
+    <symbol id="linkedin" viewBox="0 0 512 512">
+        <g>
+            <path d="m437 0h-362c-41.351562 0-75 33.648438-75 75v362c0 41.351562 33.648438 75 75 75h362c41.351562 0 75-33.648438 75-75v-362c0-41.351562-33.648438-75-75-75zm-256 406h-60v-210h60zm0-240h-60v-60h60zm210 240h-60v-120c0-16.539062-13.460938-30-30-30s-30 13.460938-30 30v120h-60v-210h60v11.308594c15.71875-4.886719 25.929688-11.308594 45-11.308594 40.691406.042969 75 36.546875 75 79.6875zm0 0"/>
+        </g>
+    </symbol>
+</svg>
+
+<!-- Header -->
+<header class="header" id="header">
+    <div class="container">
+        <div class="header__inner">
+            <div class="header__logo">
+                <img th:src="@{/images/logo2_icon.jpg}" alt="Logo" />
+            </div>
+            <nav class="nav" id="nav">
+                <a th:href="@{/admin/adminLanding}" class="nav__link">Applications</a>
+                <a class="nav__link" th:href="@{/admin/messages}">Messages</a>
+                <a th:href="@{/logout}" class="nav__link">Logout</a>
+            </nav>
+            <button class="burger" id="navToggle" type="button">
+                <span class="burger__item">Menu</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Introduction -->
+<div class="intro" id="intro">
+    <div class="container">
+        <div class="intro__inner">
+            <h1 class="intro__title">
+                Welcome to our Smart city application</h1>
+            <h2 class="intro__subtitle">Here you will find our innovative smart city projects, ranging from
+                finding the nearest ev charging station to finding the nearest smart parking, we got you covered. </h2>
+            <a class="btn btn--red" href="#">find out more</a>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="container" id="features">
+    <div class="features">
+        <div class="features__item">
+            <img th:src="@{/images/img/features/feature-1.png}" alt="Logo" />
+            <h4 class="features__title">Easily Customised</h4>
+            <div class="features__text">Seamlessly adaptable and intuitively configurable, our cutting-edge smart city application is designed with precision.</div>
+
+        </div>
+        <div class="features__item">
+            <img th:src="@{/images/img/features/feature-2.png}" alt="Logo" />
+            <h4 class="features__title">Responsive REady</h4>
+            <div class="features__text">Crafted to be effortlessly responsive, our smart city application boasts a dynamic platform that adapts seamlessly to varying needs.</div>
+
+        </div>
+        <div class="features__item">
+            <img th:src="@{/images/img/features/feature-3.png}" alt="Logo" />
+            <h4 class="features__title">Modern Design</h4>
+            <div class="features__text">With a sleek and modern design ethos, our smart city application combines aesthetic appeal with functional excellence</div>
+
+        </div>
+        <div class="features__item">
+            <img th:src="@{/images/img/features/feature-4.png}" alt="Logo" />
+            <h4 class="features__title">Clean Code</h4>
+            <div class="features__text">Embodying the elegance of clean code principles, our smart city application sets a new standard for efficiency and maintainability.</div>
+
+        </div>
+        <div class="features__item">
+            <img th:src="@{/images/img/features/feature-5.png}" alt="Logo" />
+            <h4 class="features__title">Ready to Ship</h4>
+            <div class="features__text">Engineered for swift deployment, our smart city application is prepped and ready to ship</div>
+
+        </div>
+        <div class="features__item">
+            <img th:src="@{/images/img/features/feature-6.png}" alt="Logo" />
+            <h4 class="features__title">Sign up for Free</h4>
+            <div class="features__text">Embark on the journey to urban innovation with our smart city application – sign up for free today!</div>
+
+        </div> <!-- .features закрывает-->
+    </div> <!-- .container закрывает-->
+</div>
+
+
+<!-- Works -->
+<div class="works d-flex align-items-center justify-content-center" id="works" th:each="applications: ${applications}">
+    <div class="works__item">
+        <img class="works__photo" th:src="@{/images/services/{image}(image=${applications.imageName})}" alt="">
+        <span class="text-center text-danger" th:if="${success}"  th:text="${success}"></span>
+        <form th:action="@{/admin/customizeApp}" th:method="post">
+            <input type="hidden" name="applicationId" th:value="${applications.applicationID}">
+            <div class="works__content">
+                <div class="works__title" th:text="${applications.applicationName}"></div>
+                <div class="works__text" th:text="${applications.applicationType}"></div>
+                <button class="btn btn--red btn--long"><!--th:if="${!applications.customized}"-->Customize Application</button>
+            </div>
+        </form>
+    </div>
+
+</div> <!--  /.works -->
+
+
+<!-- Team -->
+
+<!-- Download -->
+
+<div class="download" id="download">
+    <form th:action="@{/admin/application}" th:method="get">
+        <h3 class="download__title">Are You Ready to Start?</h3>
+        <div class="download__text">
+            <p>Sign up as admin to add your application to our smart city platform!</p>
+
+            <button class="btn btn--red btn--long">Add Application </button>
+        </div>
+    </form>
+</div>
+
+<!-- Footer -->
+
+<footer class="footer">
+    <div class="container">
+
+        <div class="footer__inner">
+
+            <div class="footer__block">
+                <h4 class="footer__title">Location</h4>
+                <div class="footer__text">
+                    <div>300 Yonge St</div>
+                    <div>Toronto, ON M5B 2K3</div>
+                </div>
+            </div>
+
+            <div class="footer__block">
+                <h4 class="footer__title">Smart City Application</h4>
+                <a th:href="@{/logout}" class="nav__link">Logout</a>
+            </div>
+
+            <div class="footer__block">
+                <h4 class="footer__title">About MJ05</h4>
+                <div class="footer__text">
+                    <div>We're final year engineering students and this is our capstone project.</div>
+                </div>
+            </div>
+
+        </div> <!-- ./footer__inner -->
+    </div> <!-- ./container -->
+
+    <div class="copyright">
+        <div class="container">
+            <div class="copyright__text">
+                <div>Copyright © 2023 TMU. All Rights Reserved</div>
+                <div>Made by MJ05</div>
+            </div>
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- JavaScript-->
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script th:src="@{/js/app.js}"></script>
+
+</body>
+</html>

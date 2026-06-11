@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="wrapper">
+
+    <div class="header">
+        <div>
+            <img th:src="@{/images/logo1.png}" alt="Logo" />
+        </div>
+    </div>
+
+    <form id="application" th:action="@{/admin/newapplication}" th:object="${application}" method="post" enctype="multipart/form-data">
+        <h1>Add Application</h1>
+        <div class="input">
+            <input type="text" name="applicationName" placeholder="Application Name" required>
+            <i class='bx bxs-user'></i>
+        </div>
+        <div class="input">
+            <input type="text" name="password" placeholder="Password to access application" required>
+            <i class='bx bxs-lock-alt' ></i>
+        </div>
+        <input type="file" name="imageFile" accept="image/x-png,image/jpeg,image/jpg"/>
+        <div class="input">
+            <select name="applicationType" id="Application Type">
+                <option value="Navigation">Navigation</option>
+                <option value="Waste Management">Waste Management</option>
+                <option value="Energy Consumption">Energy Consumption</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn">Register Application</button>
+    </form>
+
+    <form id="back" th:action="@{/admin/adminLanding}" method="get">
+        <button type="submit" class="btn">Back to home page</button>
+    </form>
+</div>
+
+</body>
+</html>
