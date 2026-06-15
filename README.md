@@ -1,7 +1,7 @@
 # Smart City Application
 
 ## Overview
-The Smart City Application is a full-stack application built with Java and Spring Boot that connects a frontend user interface with backend REST APIs, database services, and external APIs. The system incorporates secure user authentication, data persistence, and third-party integrations such as Mapbox and NREL to provide smart city and sustainability-related services.
+The Smart City Application is a full-stack web application built with Java and Spring Boot that connects a frontend user interface with backend REST APIs, database services, and external APIs. The system incorporates secure user authentication, data persistence, and third-party integrations such as Mapbox and NREL APIs to provide smart city and sustainability-related services.
 
 ## Technologies 
 - Java
@@ -14,6 +14,13 @@ The Smart City Application is a full-stack application built with Java and Sprin
 - Mapbox API
 - NREL API
 
+## Features 
+- Secure user authentication and authorization using JWT
+- RESTful API development with Spring Boot
+- Integration with Mapbox API for location-based services
+- Integration with NREL API for sustainability and energy-related data
+- Relational database management and persistence
+- Unit and integration testing
 
 ## Structure 
 
@@ -52,13 +59,15 @@ The Smart City Application is a full-stack application built with Java and Sprin
 - Maintains records related to users, services, and city resources.
 - Supports reliable data management through a relational database system.
 
-## Features 
-- User authentication and authorization using JWT
-- RESTful API development with Spring Boot
-- Integration with Mapbox API
-- Integration with NREL API
-- SQL database management
-- Unit and integration testing
+## Architecture Highlights
+
+- Layered architecture design
+- Separation of presentation, business, and data responsibilities
+- JWT-based authentication and authorization
+- External API integration through the business layer
+- Repository pattern for database access
+
+
 
 
 
