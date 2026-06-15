@@ -22,4 +22,3 @@ The Smart City Application is a full-stack application built with Java and Sprin
 - JUnit
 - Mapbox API
 - NREL API
-<img width="800" height="534" alt="image" src="https://github.com/user-attachments/assets/b2e93ac3-4f0c-44eb-9e90-d022c21747fc" />
