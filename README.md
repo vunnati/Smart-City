@@ -18,6 +18,8 @@ The Smart City Application is a full-stack application built with Java and Sprin
 ## Structure 
 
 <img width="569" height="405" alt="image" src="https://github.com/user-attachments/assets/922a10e0-4fea-4030-aefc-71e4a4b0c2e5" />
+
+
 ### Layer Overview 
 
 **Presentation Layer**
